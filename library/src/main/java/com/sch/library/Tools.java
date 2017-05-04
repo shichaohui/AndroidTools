@@ -20,5 +20,5 @@ package com.sch.library;
  * <p>
  * TODO 请填写当前类的说明
  */
-public class Utils {
+public class Tools {
 }

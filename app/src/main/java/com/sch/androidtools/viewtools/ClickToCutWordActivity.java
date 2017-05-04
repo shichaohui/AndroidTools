@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sch.androidtools.R;
-import com.sch.library.viewutil.ClickToCutWordHelper;
+import com.sch.library.viewtools.ClickToCutWordHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
