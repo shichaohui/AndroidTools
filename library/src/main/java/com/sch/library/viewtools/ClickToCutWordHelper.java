@@ -47,8 +47,6 @@ public class ClickToCutWordHelper implements View.OnTouchListener, View.OnClickL
      */
     private final long DBLCLICK_INTERVAL = 1000L;
 
-    private TextView textView;
-
     private long lastClickTime;
     private String lastClickWord;
 
@@ -73,7 +71,6 @@ public class ClickToCutWordHelper implements View.OnTouchListener, View.OnClickL
     }
 
     public ClickToCutWordHelper(TextView textView, @NonNull OnCutWordListener onCutWordListener) {
-        this.textView = textView;
         this.onCutWordListener = onCutWordListener;
 
         textView.setOnTouchListener(this);
@@ -96,7 +93,9 @@ public class ClickToCutWordHelper implements View.OnTouchListener, View.OnClickL
     @Override
     public void onClick(View v) {
 
-        String clickWord = getClickedWord();
+        TextView textView = (TextView) v;
+
+        String clickWord = getClickedWord(textView, getClickedPosition(textView, touchX, touchY));
 
         if (TextUtils.isEmpty(clickWord)) {
             return;
@@ -120,22 +119,21 @@ public class ClickToCutWordHelper implements View.OnTouchListener, View.OnClickL
 
     }
 
-    private String getClickedWord() {
+    private String getClickedWord(TextView textView, int clickedPosition) {
         String text = textView.getText().toString();
-        int offset = getClickedPosition(textView, touchX, touchY);
-        if (text.length() <= offset || !Character.isLetter(text.charAt(offset))) {
+        if (text.length() <= clickedPosition || !Character.isLetter(text.charAt(clickedPosition))) {
             return "";
         }
-        int offsetStart = offset;
-        for (int i = offset - 1; i >= 0; i--) {
+        int offsetStart = clickedPosition;
+        for (int i = clickedPosition - 1; i >= 0; i--) {
             if (Character.isLetter(text.charAt(i))) {
                 offsetStart = i;
             } else {
                 break;
             }
         }
-        int offsetEnd = offset;
-        for (int i = offset + 1, N = text.length(); i < N; i++) {
+        int offsetEnd = clickedPosition;
+        for (int i = clickedPosition + 1, N = text.length(); i < N; i++) {
             if (Character.isLetter(text.charAt(i))) {
                 offsetEnd = i;
             } else {
