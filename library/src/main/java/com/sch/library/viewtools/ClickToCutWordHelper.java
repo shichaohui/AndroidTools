@@ -96,20 +96,25 @@ public class ClickToCutWordHelper implements View.OnTouchListener, View.OnClickL
     @Override
     public void onClick(View v) {
 
+        String clickWord = getClickedWord();
+
+        if (TextUtils.isEmpty(clickWord)) {
+            return;
+        }
+
         if (clickType == TYPE_CLICK) {
-            onCutWordListener.onCutWord(getClickedWord());
+            onCutWordListener.onCutWord(clickWord);
             return;
         }
 
         long clickTime = System.currentTimeMillis();
         if (clickType == TYPE_DBLCLICK && clickTime - lastClickTime > DBLCLICK_INTERVAL) {
             lastClickTime = clickTime;
-            lastClickWord = getClickedWord();
+            lastClickWord = clickWord;
             return;
         }
 
-        String clickWord = getClickedWord();
-        if (!TextUtils.isEmpty(lastClickWord) && lastClickWord.equals(clickWord)) {
+        if (lastClickWord.equals(clickWord)) {
             onCutWordListener.onCutWord(clickWord);
         }
 
@@ -137,7 +142,7 @@ public class ClickToCutWordHelper implements View.OnTouchListener, View.OnClickL
                 break;
             }
         }
-        return text.substring(offsetStart, offsetEnd + 1);
+        return text.substring(offsetStart, offsetEnd + 1).trim();
     }
 
     /**
