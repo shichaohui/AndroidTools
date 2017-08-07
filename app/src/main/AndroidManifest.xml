@@ -16,8 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.sch.androidtools.viewtools.ClickToCutWordActivity">
-        </activity>
+        <activity android:name=".viewtools.ClickToCutWordActivity"/>
+        <activity android:name=".widget.ClickableTextViewActivity"/>
     </application>
 
 </manifest>
